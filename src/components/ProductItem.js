@@ -1,16 +1,21 @@
-import React from "react";
-import { useCart } from "../contexts/CartContext";
-import { useUser } from "../contexts/UserContext";
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCart } from '../contexts/CartContext';
 
 function ProductItem({ product }) {
   const { addToCart } = useCart();
-  const { user } = useUser();
+  const navigate = useNavigate();
+
+  const handleAddToCart = () => {
+    addToCart(product);
+    navigate('/cart');
+  };
 
   return (
     <div className="product-item">
-      <h3>{product.name}</h3>
+      <h3><Link to={`/product/${product.id}`}>{product.name}</Link></h3>
       <p>Price: ${product.price.toFixed(2)}</p>
-      {user && <button onClick={() => addToCart(product)}>Add to Cart</button>}
+      <button onClick={handleAddToCart}>Add to Cart</button>
     </div>
   );
 }
