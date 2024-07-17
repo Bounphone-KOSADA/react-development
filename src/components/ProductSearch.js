@@ -1,11 +1,14 @@
+// src/components/ProductSearch.js
 import React, { useState } from 'react';
+import { useInventory } from '../contexts/InventoryContext';
 
-function ProductSearch({ onSearch }) {
+function ProductSearch() {
   const [searchTerm, setSearchTerm] = useState('');
+  const { searchProducts } = useInventory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch(searchTerm);
+    searchProducts(searchTerm);
   };
 
   return (

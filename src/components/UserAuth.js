@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { useUser } from "../contexts/UserContext";
 
-function UserAuth({ onLogin }) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+function UserAuth() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const { user, login, logout } = useUser();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onLogin({ username });
-    setUsername('');
-    setPassword('');
+    login({ username });
+    setUsername("");
+    setPassword("");
   };
+
+  if (user) {
+    return (
+      <div>
+        <p>Welcome, {user.username}!</p>
+        <button onClick={logout}>Logout</button>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit}>
